@@ -21,42 +21,36 @@ const validationSchema = Yup.object({
     .required(),
 });
 
-class AddContacts extends React.Component {
-  handleSubmit = (values, { resetForm }) => {
-    this.props.onSubmit(values);
+const AddContacts = ({ onSubmit }) => {
+  const handleSubmit = (values, { resetForm }) => {
+    onSubmit(values);
     resetForm();
   };
 
-  render() {
-    return (
-      <div className={s.formWrap}>
-        <Formik
-          initialValues={{ name: '', number: '' }}
-          validationSchema={validationSchema}
-          onSubmit={this.handleSubmit}
-        >
-          <Form autoComplete="off">
-            <label htmlFor="name">Name</label>
-            <Field type="text" name="name" />
-            <ErrorMessage name="name">
-              {msg => (
-                <div style={{ color: 'red', fontSize: '13px' }}>{msg}</div>
-              )}
-            </ErrorMessage>
-            <label htmlFor="name">Number</label>
-            <Field type="tel" name="number" />
-            <ErrorMessage name="number">
-              {msg => (
-                <div style={{ color: 'red', fontSize: '13px' }}>{msg}</div>
-              )}
-            </ErrorMessage>
-            <button type="submit">Add contact</button>
-          </Form>
-        </Formik>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={s.formWrap}>
+      <Formik
+        initialValues={{ name: '', number: '' }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        <Form autoComplete="off">
+          <label htmlFor="name">Name</label>
+          <Field type="text" name="name" />
+          <ErrorMessage name="name">
+            {msg => <div style={{ color: 'red', fontSize: '13px' }}>{msg}</div>}
+          </ErrorMessage>
+          <label htmlFor="name">Number</label>
+          <Field type="tel" name="number" />
+          <ErrorMessage name="number">
+            {msg => <div style={{ color: 'red', fontSize: '13px' }}>{msg}</div>}
+          </ErrorMessage>
+          <button type="submit">Add contact</button>
+        </Form>
+      </Formik>
+    </div>
+  );
+};
 
 AddContacts.propTypes = {
   onSubmit: PropTypes.func,
